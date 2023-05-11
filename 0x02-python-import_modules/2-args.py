@@ -1,17 +1,17 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 if __name__ == "__main__":
-import sys
+    import sys
 
-args = sys.argv[1:]
-num_args = len(args)
+    args = sys.argv[1:]
+    num_args = len(args)
 
-if num_args == 0:
-    print("0 arguments.")
-elif num_args == 1:
-    print("1 argument:")
-else:
-    print("{} arguments:".format(num_args))
+    if num_args == 0:
+        print("0 arguments.")
+    elif num_args == 1:
+        print("1 argument:")
+    else:
+        print("{} arguments:".format(num_args))
 
-if num_args > 0:
-    for i in range(num_args):
-        print("{}: {}".format(i+1, args[i]))
+    if num_args > 0:
+        for i in range(num_args):
+            print("{}: {}".format(i+1, args[i]))
