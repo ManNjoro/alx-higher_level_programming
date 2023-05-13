@@ -1,8 +1,4 @@
 #!/usr/bin/python3
 def print_matrix_integer(matrix=[[]]):
-    if not matrix:
-        return
-    for row in matrix:
-        for column in row:
-            print("{0:3d}".format(column), end=" ")
-        print()
+    for i in matrix:
+        print(' '.join("{:d}".format(j) for j in i))
