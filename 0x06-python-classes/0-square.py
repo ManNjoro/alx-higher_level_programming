@@ -1,8 +1,8 @@
-#!/usr/bin/python
-"""
-Represents a square.
-"""
+#!/usr/bin/python3
 
 
 class Square:
+    """
+    Represents a square.
+    """
     pass
