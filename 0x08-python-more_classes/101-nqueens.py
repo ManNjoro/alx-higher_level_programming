@@ -1,132 +1,64 @@
 #!/usr/bin/python3
 """
-    chess class.
-
+Queen class
 """
 
-import sys
+from sys import argv
 
 
-def is_safe(board, row, col):
+class Queen:
     """
-    Check if it's safe to place a queen at position
-    (row, col) on the board.
-
-    Args:
-        board (list[list[int]]): The current state of the chessboard.
-        row (int): The row to check.
-        col (int): The column to check.
-
-    Returns:
-        bool: True if it's safe to place a queen, False otherwise.
+    Class to solve the N-Queens problem using recursion.
     """
-    # Check if there is a queen in the same column
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
+    def __init__(self, N):
+        """
+        Initialize the Queen class with the board size N and an empty list for
+        storing the right positions.
+        """
+        self.N = N
+        self.right = [None] * N
 
-    # Check if there is a queen in the upper left diagonal
-    i = row
-    j = col
-    while i >= 0 and j >= 0:
-        if board[i][j] == 1:
-            return False
-        i -= 1
-        j -= 1
+    def can_move(self, x, y):
+        """
+        Check if a queen can be placed at position (x, y) without attacking
+        any other queens.
+        """
+        for a in range(x):
+            if self.right[a] == y or abs(self.right[a] - y) == (x - a):
+                return False
+        return True
 
-    # Check if there is a queen in the upper right diagonal
-    i = row
-    j = col
-    while i >= 0 and j < len(board):
-        if board[i][j] == 1:
-            return False
-        i -= 1
-        j += 1
+    def solution(self, n):
+        """
+        Recursively find and print all possible solutions to the
+        N-Queens problem.
+        """
+        if n == self.N:
+            print([[j, self.right[j]] for j in range(self.N)])
+            return
 
-    return True
-
-
-def solve_nqueens(n):
-    """
-    Solve the N-Queens problem for a given board size.
-
-    Args:
-        n (int): The size of the board and the number of queens.
-
-    Returns:
-        list[list[int]]: List of solutions, each represented as a list
-        of queen positions.
-    """
-    board = [[0 for _ in range(n)] for _ in range(n)]
-    solutions = []
-    solve_nqueens_util(board, 0, solutions)
-    return solutions
-
-
-def solve_nqueens_util(board, row, solutions):
-    """
-    Recursive utility function to solve the N-Queens problem.
-
-    Args:
-        board (list[list[int]]): The current state of the chessboard.
-        row (int): The current row to consider.
-        solutions (list[list[int]]): List of solutions, each represented
-        as a list of queen positions.
-    """
-    n = len(board)
-
-    # Base case: If all queens are placed, add the solution to the list
-    if row == n:
-        solution = []
-        for i in range(n):
-            for j in range(n):
-                if board[i][j] == 1:
-                    solution.append([i, j])
-        solutions.append(solution)
-        return
-
-    # Try placing a queen in each column of the current row
-    for col in range(n):
-        if is_safe(board, row, col):
-            board[row][col] = 1
-            solve_nqueens_util(board, row + 1, solutions)
-            board[row][col] = 0
-
-
-def print_solutions(solutions):
-    """
-    Print the solutions to the N-Queens problem.
-
-    Args:
-        solutions (list[list[int]]): List of solutions, each
-        represented as a list of queen positions.
-    """
-    for solution in solutions:
-        print(solution)
-
-
-def main():
-    # Check if the number of arguments is correct
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-
-    # Get the value of N from the command line argument
-    try:
-        n = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-
-    # Check if N is at least 4
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    # Solve the N-Queens problem and print the solutions
-    solutions = solve_nqueens(n)
-    print_solutions(solutions)
+        for j in range(self.N):
+            if self.can_move(n, j):
+                self.right[n] = j
+                self.solution(n + 1)
 
 
 if __name__ == "__main__":
-    main()
+    count = len(argv)
+
+    if count != 2:
+        print("Usage: nqueens N")
+        exit(1)
+    else:
+        try:
+            N = int(argv[1])
+        except ValueError:
+            print("N must be a number")
+            exit(1)
+
+    if N < 4:
+        print("N must be at least 4")
+        exit(1)
+
+    final = Queen(N)
+    final.solution(0)
