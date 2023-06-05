@@ -12,7 +12,10 @@ class Rectangle:
     Attributes:
         width (int): The width of the rectangle.
         height (int): The height of the rectangle.
+        number_of_instances (int): The number of instances of Rectangle.
     """
+
+    number_of_instances = 0
 
     def __init__(self, width=0, height=0):
         """
@@ -24,6 +27,7 @@ class Rectangle:
         """
         self.width = width
         self.height = height
+        Rectangle.number_of_instances += 1
 
     @property
     def width(self):
@@ -88,7 +92,7 @@ class Rectangle:
         """
         Calculates and returns the perimeter of the rectangle.
 
-        If either the width or height is equal to 0, the perimeter is 0.
+        If either the width or height is equal to 0, the perimeter is 0
 
         Returns:
             int: The perimeter of the rectangle.
@@ -124,5 +128,7 @@ class Rectangle:
     def __del__(self):
         """
         Prints a message when an instance of Rectangle is deleted.
+        Decrements the number_of_instances class attribute.
         """
         print("Bye rectangle...")
+        Rectangle.number_of_instances -= 1
