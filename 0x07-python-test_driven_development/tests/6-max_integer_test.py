@@ -9,6 +9,12 @@ max_integer = __import__('6-max_integer').max_integer
 
 
 class TestMaxInteger(unittest.TestCase):
+    def test_docstring(self):
+        self.assertTrue(len(__import__('6-max_integer').__doc__) > 1)
+
+    def test_func_doc(self):
+        self.assertTrue(len(max_integer.__doc__) > 1)
+
     def test_regular_list(self):
         """Test with a regular list"""
         self.assertEqual(max_integer([1, 2, 3, 4]), 4)
