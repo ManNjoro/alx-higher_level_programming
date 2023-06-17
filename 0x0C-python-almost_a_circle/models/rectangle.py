@@ -17,9 +17,12 @@ class Rectangle(Base):
         Args:
             width (int): The width of the rectangle.
             height (int): The height of the rectangle.
-            x : The x-coordinate of the rectangle's position. Defaults to 0.
-            y : The y-coordinate of the rectangle's position. Defaults to 0.
-            id : The unique identifier for the rectangle. Defaults to None.
+            x (int, optional): The x-coordinate of the rectangle's position.
+                               Defaults to 0.
+            y (int, optional): The y-coordinate of the rectangle's position.
+                               Defaults to 0.
+            id (int, optional): The unique identifier for the rectangle.
+                                Defaults to None.
         """
         super().__init__(id)
         self.width = width
@@ -29,56 +32,95 @@ class Rectangle(Base):
 
     @property
     def width(self):
-        """
-        Getter for the width attribute.
-        """
+        """Getter for the width attribute."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """
-        Setter for the width attribute.
-        """
+        """Setter for the width attribute."""
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
         self.__width = value
 
     @property
     def height(self):
-        """
-        Getter for the height attribute.
-        """
+        """Getter for the height attribute."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """
-        Setter for the height attribute.
-        """
+        """Setter for the height attribute."""
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value <= 0:
+            raise ValueError("height must be > 0")
         self.__height = value
 
     @property
     def x(self):
-        """
-        Getter for the x-coordinate attribute.
-        """
+        """Getter for the x attribute."""
         return self.__x
 
     @x.setter
     def x(self, value):
-        """
-        Setter for the x-coordinate attribute.
-        """
+        """Setter for the x attribute."""
+        if not isinstance(value, int):
+            raise TypeError("x must be an integer")
+        if value < 0:
+            raise ValueError("x must be >= 0")
         self.__x = value
 
     @property
     def y(self):
-        """
-        Getter for the y-coordinate attribute.
-        """
+        """Getter for the y attribute."""
         return self.__y
 
     @y.setter
     def y(self, value):
-        """
-        Setter for the y-coordinate attribute.
-        """
+        """Setter for the y attribute."""
+        if not isinstance(value, int):
+            raise TypeError("y must be an integer")
+        if value < 0:
+            raise ValueError("y must be >= 0")
         self.__y = value
+
+    def area(self):
+        """
+        Calculates and returns the area of the rectangle.
+
+        Returns:
+            int: The area of the rectangle.
+        """
+        return self.width * self.height
+
+    def display(self):
+        """Prints the rectangle using the '#' character."""
+        for _ in range(self.y):
+            print()
+        for _ in range(self.height):
+            print(" " * self.x + "#" * self.width)
+
+    def __str__(self):
+        """
+        Returns a string representation of the rectangle.
+
+        Returns:
+            str: The string representation of the rectangle.
+        """
+        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - " \
+               f"{self.width}/{self.height}"
+
+    def update(self, *args, **kwargs):
+        """
+        Updates the attributes of the rectangle using positional and \
+                keyword arguments.
+        """
+        if args:
+            attrs = ['id', 'width', 'height', 'x', 'y']
+            for i in range(len(args)):
+                setattr(self, attrs[i], args[i])
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
