@@ -108,7 +108,7 @@ class Test_Base(unittest.TestCase):
         self.assertEqual(json_data, "[]")
 
         warn = ("to_json_string() missing 1 required positional argument: " +
-                "'list_dict'")
+                "'list_dictionaries'")
 
         with self.assertRaises(TypeError) as msg:
             Base.to_json_string()
