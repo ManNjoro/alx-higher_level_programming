@@ -2,6 +2,7 @@
 """
 Creates a base class
 """
+from os import path
 import json
 
 

@@ -50,6 +50,27 @@ class Square(Rectangle):
         """
         return f"[Square] ({self.id}) {self.x}/{self.y} - {self.width}"
 
+    @property
+    def size(self):
+        """
+        Gets the size of the square.
+
+        Returns:
+            int: The size of the square.
+        """
+        return self.width
+
+    @size.setter
+    def size(self, value):
+        """
+        Sets the size of the square.
+
+        Args:
+            value (int): The size of the square.
+        """
+        self.width = value
+        self.height = value
+
     def to_dictionary(self):
         """
         Returns the dictionary representation of the square.

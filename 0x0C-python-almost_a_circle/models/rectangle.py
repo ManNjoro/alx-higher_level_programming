@@ -11,80 +11,98 @@ class Rectangle(Base):
     """
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """
-        Initializes a Rectangle object.
-
+        """__init__ initialized constuctor
         Args:
-            width (int): The width of the rectangle.
-            height (int): The height of the rectangle.
-            x (int, optional): The x-coordinate of the rectangle's position.
-                               Defaults to 0.
-            y (int, optional): The y-coordinate of the rectangle's position.
-                               Defaults to 0.
-            id (int, optional): The unique identifier for the rectangle.
-                                Defaults to None.
+            width (int)
+            height (int)
+            x (int, optional): Defaults to 0.
+            y (int, optional): Defaults to 0.
+            id ([type], optional): Defaults to None.
         """
         super().__init__(id)
-        self.width = width
-        self.height = height
-        self.x = x
-        self.y = y
+
+        self.check_integer_parameter(width, 'width')
+        self.check_integer_parameter(height, 'height')
+        self.check_integer_parameter(x, 'x')
+        self.check_integer_parameter(y, 'y')
+
+        self.__width = width
+        self.__height = height
+        self.__x = x
+        self.__y = y
 
     @property
     def width(self):
-        """Getter for the width attribute."""
+        """Getter value for width
+        """
         return self.__width
 
     @width.setter
-    def width(self, value):
-        """Setter for the width attribute."""
-        if not isinstance(value, int):
-            raise TypeError("width must be an integer")
-        if value <= 0:
-            raise ValueError("width must be > 0")
-        self.__width = value
+    def width(self, param):
+        """Setter value for width
+        """
+        self.check_integer_parameter(param, 'width')
+
+        self.__width = param
 
     @property
     def height(self):
-        """Getter for the height attribute."""
+        """Getter value for height
+        """
         return self.__height
 
     @height.setter
-    def height(self, value):
-        """Setter for the height attribute."""
-        if not isinstance(value, int):
-            raise TypeError("height must be an integer")
-        if value <= 0:
-            raise ValueError("height must be > 0")
-        self.__height = value
+    def height(self, param):
+        """Setter value for height
+        """
+        self.check_integer_parameter(param, 'height')
+
+        self.__height = param
 
     @property
     def x(self):
-        """Getter for the x attribute."""
+        """Getter value for x
+        """
         return self.__x
 
     @x.setter
-    def x(self, value):
-        """Setter for the x attribute."""
-        if not isinstance(value, int):
-            raise TypeError("x must be an integer")
-        if value < 0:
-            raise ValueError("x must be >= 0")
-        self.__x = value
+    def x(self, param):
+        """Setter value for x"
+        """
+        self.check_integer_parameter(param, 'x')
+
+        self.__x = param
 
     @property
     def y(self):
-        """Getter for the y attribute."""
+        """Getter value for y
+        """
         return self.__y
 
     @y.setter
-    def y(self, value):
-        """Setter for the y attribute."""
-        if not isinstance(value, int):
-            raise TypeError("y must be an integer")
-        if value < 0:
-            raise ValueError("y must be >= 0")
-        self.__y = value
+    def y(self, param):
+        """Setter value for y
+        """
+        self.check_integer_parameter(param, 'y')
+
+        self.__y = param
+
+    def check_integer_parameter(self, value, param):
+        """Args:
+            width (int)
+            height (int)
+            x (int, optional): Defaults to 0.
+            y (int, optional): Defaults to 0.
+            id ([type], optional): Defaults to None.
+        """
+        if type(value) is not int:
+            raise TypeError(param + ' must be an integer')
+
+        if value <= 0 and param in ('width', 'height'):
+            raise ValueError(param + ' must be > 0')
+
+        if value < 0 and param in ('x', 'y'):
+            raise ValueError(param + ' must be >= 0')
 
     def area(self):
         """
