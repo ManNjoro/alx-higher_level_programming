@@ -1,9 +1,9 @@
 # SQL - Introduction
 
-** 0. List databases
+## 0. List databases
 Write a script that lists all databases of your MySQL server.
 
-'''
+```
 guillaume@ubuntu:~/$ cat 0-list_databases.sql | mysql -hlocalhost -uroot -p
 Enter password: 
 Database                                                                                     
@@ -13,4 +13,4 @@ mysql
 performance_schema                                                                           
 sys        
 guillaume@ubuntu:~/$
-'''
+```
