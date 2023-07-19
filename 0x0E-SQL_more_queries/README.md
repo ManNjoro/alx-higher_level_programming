@@ -84,3 +84,107 @@ id  name
 89  Best School
 guillaume@ubuntu:~/$ 
 ```
+
+## 4. ID can't be null
+Write a script that creates the table id_not_null on your MySQL server.
+
+- id_not_null description:
+    - id INT with the default value 1
+    - name VARCHAR(256)
+- The database name will be passed as an argument of the mysql command
+- If the table id_not_null already exists, your script should not fail
+```
+guillaume@ubuntu:~/$ cat 4-never_empty.sql | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+guillaume@ubuntu:~/$ echo 'INSERT INTO id_not_null (id, name) VALUES (89, "Best School");' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+guillaume@ubuntu:~/$ echo 'SELECT * FROM id_not_null;' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+id  name
+89  Best School
+guillaume@ubuntu:~/$ echo 'INSERT INTO id_not_null (name) VALUES ("Best");' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+guillaume@ubuntu:~/$ echo 'SELECT * FROM id_not_null;' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+id  name
+89  Best School
+1   Best
+guillaume@ubuntu:~/$ 
+```
+
+## 5. Unique ID
+Write a script that creates the table unique_id on your MySQL server.
+
+- unique_id description:
+    - id INT with the default value 1 and must be unique
+    - name VARCHAR(256)
+- The database name will be passed as an argument of the mysql command
+- If the table unique_id already exists, your script should not fail
+
+```
+guillaume@ubuntu:~/$ cat 5-unique_id.sql | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+guillaume@ubuntu:~/$ echo 'INSERT INTO unique_id (id, name) VALUES (89, "Best School");' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+guillaume@ubuntu:~/$ echo 'SELECT * FROM unique_id;' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+id  name
+89  Best School
+guillaume@ubuntu:~/$ echo 'INSERT INTO unique_id (id, name) VALUES (89, "Best");' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+ERROR 1062 (23000) at line 1: Duplicate entry '89' for key 'unique_id.id'
+guillaume@ubuntu:~/$ echo 'SELECT * FROM unique_id;' | mysql -hlocalhost -uroot -p hbtn_0d_2
+Enter password: 
+id  name
+89  Best School
+guillaume@ubuntu:~/$ 
+```
+
+## 6. States table
+Write a script that creates the database hbtn_0d_usa and the table states (in the database hbtn_0d_usa) on your MySQL server.
+
+- states description:
+    - id INT unique, auto generated, can’t be null and is a primary key
+    - name VARCHAR(256) can’t be null
+- If the database hbtn_0d_usa already exists, your script should not fail
+- If the table states already exists, your script should not fail
+```
+guillaume@ubuntu:~/$ cat 6-states.sql | mysql -hlocalhost -uroot -p
+Enter password: 
+guillaume@ubuntu:~/$ echo 'INSERT INTO states (name) VALUES ("California"), ("Arizona"), ("Texas");' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+guillaume@ubuntu:~/$ echo 'SELECT * FROM states;' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+id  name
+1   California
+2   Arizona
+3   Texas
+guillaume@ubuntu:~/
+```
+## 7. Cities table
+Write a script that creates the database hbtn_0d_usa and the table cities (in the database hbtn_0d_usa) on your MySQL server.
+
+- cities description:
+    - id INT unique, auto generated, can’t be null and is a primary key
+    - state_id INT, can’t be null and must be a FOREIGN KEY that references to id of the states table
+    - name VARCHAR(256) can’t be null
+- If the database hbtn_0d_usa already exists, your script should not fail
+- If the table cities already exists, your script should not fail
+```
+guillaume@ubuntu:~/$ cat 7-cities.sql | mysql -hlocalhost -uroot -p
+Enter password: 
+guillaume@ubuntu:~/$ echo 'INSERT INTO cities (state_id, name) VALUES (1, "San Francisco");' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+guillaume@ubuntu:~/$ echo 'SELECT * FROM cities;' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+id  state_id    name
+1   1   San Francisco
+guillaume@ubuntu:~/$ echo 'INSERT INTO cities (state_id, name) VALUES (10, "Paris");' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+ERROR 1452 (23000) at line 1: Cannot add or update a child row: a foreign key constraint fails (`hbtn_0d_usa`.`cities`, CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`))
+guillaume@ubuntu:~/$ echo 'SELECT * FROM cities;' | mysql -hlocalhost -uroot -p hbtn_0d_usa
+Enter password: 
+id  state_id    name
+1   1   San Francisco
+guillaume@ubuntu:~/$ 
+```
