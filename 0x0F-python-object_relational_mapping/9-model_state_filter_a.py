@@ -14,8 +14,8 @@ if __name__ == "__main__":
         argv[1], argv[2], argv[3]), pool_pre_ping=True)
     session = sessionmaker(bind=engine)
     Base.metadata.create_all(engine)
-    state = session().query(State).filter(text("name LIKE BINARY '%a%'")).
-    order_by(
+    state = session().query(State).filter(text(
+        "name LIKE BINARY '%a%'")).order_by(
         State.id).all()
     if state:
         for stat in state:
